@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from abc import abstractmethod, ABCMeta
 from multiprocessing import Queue
 from queue import Empty

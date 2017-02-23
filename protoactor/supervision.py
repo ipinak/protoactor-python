@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from abc import ABCMeta, abstractmethod
 
 from .mailbox.messages import ResumeMailbox
@@ -15,12 +17,15 @@ class SupervisorDirective:
     Escalate = 3
 
 
-class Supervisor:
-    def escalate_failure(who, reason):
+class Supervisor(metaclass=ABCMeta):
+
+    @abstractmethod
+    def escalate_failure(self, who, reason):
         raise NotImplementedError("Implement this on a subclass")
 
 
 class AbstractSupervisorStrategy(metaclass=ABCMeta):
+
     @abstractmethod
     def handle_failure(self, supervisor, child: PID, rs_stats: RestartStatistics, reason: Exception, message: object):
         raise NotImplementedError("Should Implement this method")

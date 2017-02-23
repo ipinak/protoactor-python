@@ -6,29 +6,36 @@ from .props import Props
 from .context import AbstractContext
 from .pid import PID
 
-class Actor(metaclass=ABCMeta):
+
+class BaseActor(metaclass=ABCMeta):
     @abstractmethod
     async def receive(self, context: AbstractContext) -> None:
         pass
 
 
-def from_producer(producer: Callable[[], Actor]) -> Props:
-    return Props(producer=producer)
+class Actor(BaseActor):
 
+    @staticmethod
+    def from_producer(cls, producer: Callable):
+        return Props().with_producer(producer)
 
-def from_func(receive) -> Props:
-    pass
+    @staticmethod
+    def from_func(cls, receive) -> Props:
+        return cls.from_producer(receive)
 
+    @staticmethod
+    def spawn(cls, props: Props) -> PID:
+        name = ProcessRegistry().next_id()
+        return Actor.spawned_name(cls, props, name)
 
-def spawn(props: Props) -> PID:
-    return props.spawn(ProcessRegistry().next_id())
+    @staticmethod
+    def spawned_name(cls, props: Props, name: str) -> PID:
+        return props.spawn(name)
 
-
-def spawn_prefix(props, prefix: str):
-    pass
-
-
-def spawn_named(props, name: str):
-    pass
-
-
+    @staticmethod
+    def spawn_prefix(cls, props: Props, prefix: str) -> PID:
+        name = "%(prefix)s%(next_id)s" % {
+            "prefix": prefix,
+            "next_id": ProcessRegistry().next_id()
+        }
+        return Actor.spawned_name(cls, props, name)

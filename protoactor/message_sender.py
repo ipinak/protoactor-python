@@ -1,9 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from .pid import PID
 
-class MessageSender:
+
+class MessageSender(object):
     def __init__(self, message: object, sender: PID) -> None:
         self.__message = message
-        self.__sender= sender
+        self.__sender = sender
 
     @property
     def sender(self) -> PID:

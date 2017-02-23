@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from .process import AbstractProcess
 from .process_registry import ProcessRegistry
 
@@ -25,7 +27,10 @@ class PID:
         self.__process = ref
 
     def __repr__(self):
-        return "{} / {}".format(self.__address, self.__id)
+        return "%(address)s/%(myid)s" % {
+            "address": self.__address,
+            "myid": self.__id
+        }
 
     def tell(self, msg):
         if not self.__process:
