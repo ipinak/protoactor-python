@@ -8,7 +8,7 @@ from .utils import singleton
 
 
 @singleton
-class ProcessRegistry(object):
+class ProcessRegistry:
 
     def __init__(self, resolver = None, host: str = "nonhost"):
         self._hostResolvers = [resolver]

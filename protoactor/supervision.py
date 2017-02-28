@@ -27,11 +27,14 @@ class Supervisor(metaclass=ABCMeta):
 class AbstractSupervisorStrategy(metaclass=ABCMeta):
 
     @abstractmethod
-    def handle_failure(self, supervisor, child: PID, rs_stats: RestartStatistics, reason: Exception, message: object):
+    def handle_failure(self, supervisor, child: PID,
+                       rs_stats: RestartStatistics, reason: Exception,
+                       message: object):
         raise NotImplementedError("Should Implement this method")
 
 
 class OneOfOneStrategy(AbstractSupervisorStrategy):
+
     def __init__(self, decider, max_retries_number, within_timedelta):
         self.__decider = decider
         self.__max_retries_number = max_retries_number
@@ -40,7 +43,9 @@ class OneOfOneStrategy(AbstractSupervisorStrategy):
     def __get_pid_aref(self, pid: PID) -> AbstractProcess:
         return pid.process if pid.process is not None else ProcessRegistry().get(pid)
 
-    def handle_failure(self, supervisor, child: PID, rs_stats: RestartStatistics, reason: Exception, message: object):
+    def handle_failure(self, supervisor, child: PID,
+                       rs_stats: RestartStatistics, reason: Exception,
+                       message: object):
         directive = self.__decider(child, reason)
 
         if directive == SupervisorDirective.Resume:

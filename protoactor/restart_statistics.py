@@ -5,7 +5,9 @@ from typing import Optional
 
 
 class RestartStatistics:
-    def __init__(self, failure_count: int, last_failure_time: Optional[datetime.datetime]) -> None:
+
+    def __init__(self, failure_count: int,
+                last_failure_time: Optional[datetime.datetime]) -> None:
         self.__failure_count = failure_count
         self.__last_failure_time = last_failure_time
 
@@ -17,7 +19,8 @@ class RestartStatistics:
     def last_failure_time(self) -> datetime.datetime:
         return self.__last_failure_time
 
-    def request_restart_permission(self, max_retries_number: int, within_timedelta: datetime.timedelta = None):
+    def request_restart_permission(self, max_retries_number: int,
+                                   within_timedelta: datetime.timedelta = None):
         if max_retries_number == 0:
             return False
 

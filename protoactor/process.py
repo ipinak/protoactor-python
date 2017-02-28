@@ -98,7 +98,8 @@ class EventStream:
 
     def __report_deadletters(self, message: DeadLetterEvent) -> None:
         if isinstance(message, DeadLetterEvent):
-            console_message = """[DeadLetterEvent] %(pid)s got %(message_type)s:%(message)s from
+            console_message = """[DeadLetterEvent] %(pid)s got
+            %(message_type)s:%(message)s from
             %(sender)s""" % {"pid": message.pid,
                              "message_type": type(message.message),
                              "message": message.message,

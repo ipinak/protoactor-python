@@ -35,6 +35,7 @@ def default_spawner(name: str, props: 'Props', parent: PID) -> PID:
 
     pid = ProcessRegistry().add(name, process)
     context.my_self = pid
+    mailbox.register_handlers(context, dispatcher)
 
     mailbox.start()
     mailbox.post_system_message(Started())
@@ -48,7 +49,7 @@ def default_mailbox_producer(invoker: AbstractInvoker,
                    dispatcher)
 
 
-class Props(object):
+class Props:
 
     def __init__(self, producer: Producer = None,
                  spawner: Spawner = default_spawner,

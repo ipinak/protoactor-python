@@ -32,16 +32,13 @@ class AbstractMailbox(metaclass=ABCMeta):
 
 
 class DefaultMailbox(AbstractMailbox):
+
     def __init__(self, system_messages_queue: AbstractQueue,
                  user_messages_queue: AbstractQueue,
-                 invoker: AbstractInvoker = None,
-                 dispatcher: AbstractDispatcher = None,
-                 *statistics: Optional[AbstractMailBoxStatistics]) -> None:
+                 *statistics: List[AbstractMailBoxStatistics]) -> None:
         self.__system_messages_queue = system_messages_queue
         self.__user_messages_queue = user_messages_queue
-        self.__statistics = statistics if statistics else []
-        self.__invoker = invoker
-        self.__dispatcher = dispatcher
+        self.__statistics = statistics if statistics else None
         self.__status = MailBoxStatus.IDLE
         self.__suspended = False
 
@@ -54,6 +51,11 @@ class DefaultMailbox(AbstractMailbox):
         for stats in self.__statistics:
             stats.message_posted()
         self.__schedule()
+
+    def register_handlers(self, invoker: AbstractInvoker,
+                          dispatcher: AbstractDispatcher):
+        self.__invoker = invoker
+        self.__dispatcher = dispatcher
 
     def start(self):
         for stats in self.__statistics:
@@ -77,8 +79,9 @@ class DefaultMailbox(AbstractMailbox):
     async def __process_messages(self):
         throughput = self.__dispatcher.throughput
         message = None
+        i = 0
         try:
-            for i in range(throughput):
+            while (i < throughput):
                 message = self.__system_messages_queue.pop()
                 if message:
                     if isinstance(message, SuspendMailbox):
@@ -98,11 +101,12 @@ class DefaultMailbox(AbstractMailbox):
                         stats.message_received()
                 else:
                     break
+                i = i + 1
         except Exception as e:
             self.__invoker.escalate_failure(e, message)
 
 
-class UnboundedMailbox(object):
+class UnboundedMailbox:
     """Mailbox with unlimited mailbox size queues.""""
 
     @staticmethod
@@ -111,7 +115,7 @@ class UnboundedMailbox(object):
                               statistics: *stats)
 
 
-class BoundedMailbox(object):
+class BoundedMailbox:
     """Mailbox with a fixed user mailbox queue size."""
 
     @staticmethod

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-class SystemMessage(object):
+class SystemMessage:
     pass
 
 
