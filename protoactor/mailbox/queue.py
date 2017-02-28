@@ -3,7 +3,7 @@
 from abc import abstractmethod, ABCMeta
 from multiprocessing import Queue
 from queue import Empty
-from typing import Optional
+from typing import Optional, Number
 
 
 class AbstractQueue(metaclass=ABCMeta):
@@ -35,3 +35,21 @@ class UnboundedMailboxQueue(AbstractQueue):
 
     def has_messages(self) -> bool:
         return not self.__messages.empty()
+
+
+class BoundedMailboxQueue(AbstractQueue):
+
+    def __init__(self, size: Number):
+        self.__queue = Queue(size)
+
+    def pop(self):
+        try:
+            return self.__queue.get_nowait()
+        except Empty:
+            return None
+
+    def push(self, message: object):
+        self.__queue.put_nowait(message)
+
+    def has_messages(self) -> bool:
+        return not self.__queue.empty()

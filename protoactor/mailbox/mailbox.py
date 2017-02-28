@@ -3,11 +3,11 @@
 from abc import ABCMeta, abstractmethod
 from enum import Enum
 from asyncio import sleep
-from typing import List, Optional
+from typing import List, Optional, Number
 
 from .mailbox_statistics import AbstractMailBoxStatistics
 from .messages import SuspendMailbox, ResumeMailbox
-from .queue import AbstractQueue
+from .queue import AbstractQueue, UnboundedMailboxQueue, BoundedMailboxQueue
 from ..dispatcher import AbstractDispatcher
 from ..invoker import AbstractInvoker
 
@@ -31,9 +31,11 @@ class AbstractMailbox(metaclass=ABCMeta):
         raise NotImplementedError("Should Implement this method")
 
 
-class Mailbox(AbstractMailbox):
-    def __init__(self, system_messages_queue: AbstractQueue, user_messages_queue: AbstractQueue,
-                 invoker: AbstractInvoker, dispatcher: AbstractDispatcher,
+class DefaultMailbox(AbstractMailbox):
+    def __init__(self, system_messages_queue: AbstractQueue,
+                 user_messages_queue: AbstractQueue,
+                 invoker: AbstractInvoker = None,
+                 dispatcher: AbstractDispatcher = None,
                  *statistics: Optional[AbstractMailBoxStatistics]) -> None:
         self.__system_messages_queue = system_messages_queue
         self.__user_messages_queue = user_messages_queue
@@ -41,7 +43,7 @@ class Mailbox(AbstractMailbox):
         self.__invoker = invoker
         self.__dispatcher = dispatcher
         self.__status = MailBoxStatus.IDLE
-        self.__suspended: bool = False
+        self.__suspended = False
 
     def post_system_message(self, message: object):
         self.__system_messages_queue.push(message)
@@ -63,8 +65,8 @@ class Mailbox(AbstractMailbox):
             self.__dispatcher.schedule(self.__run)
 
     async def __run(self):
-        while self.__system_messages_queue.has_messages() or (
-            not self.__suspended and self.__user_messages_queue.has_messages()):
+        while self.__system_messages_queue.has_messages() or\
+            (not self.__suspended and self.__user_messages_queue.has_messages()):
             await self.__process_messages()
             await sleep(0)
 
@@ -90,7 +92,7 @@ class Mailbox(AbstractMailbox):
                         break
 
                 message = self.__user_messages_queue.pop()
-                if message:
+                if mess:
                     await self.__invoker.invoke_user_message(message)
                     for stats in self.__statistics:
                         stats.message_received()
@@ -98,3 +100,22 @@ class Mailbox(AbstractMailbox):
                     break
         except Exception as e:
             self.__invoker.escalate_failure(e, message)
+
+
+class UnboundedMailbox(object):
+    """Mailbox with unlimited mailbox size queues.""""
+
+    @staticmethod
+    def create(*stats: List[AbstractMailBoxStatistics]):
+        return DefaultMailbox(UnboundedMailboxQueue(), UnboundedMailboxQueue(),
+                              statistics: *stats)
+
+
+class BoundedMailbox(object):
+    """Mailbox with a fixed user mailbox queue size."""
+
+    @staticmethod
+    def create(size: Number, *stats: List[AbstractMailBoxStatistics]):
+        return DefaultMailbox(UnboundedMailboxQueue(),
+                              BoundedMailboxQueue(size),
+                              statistics: *stats)

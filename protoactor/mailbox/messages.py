@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-class SuspendMailbox():
+
+class SystemMessage(object):
     pass
 
-class ResumeMailbox():
+
+class SuspendMailbox(SystemMessage):
+    pass
+
+
+class ResumeMailbox(SystemMessage):
     pass
