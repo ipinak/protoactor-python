@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='protos.proto',
   package='remote',
   syntax='proto3',
-  serialized_pb=_b('\n\x0cprotos.proto\x12\x06remote\x1a\x10protos_pb2.proto\"d\n\x0cMessageBatch\x12\x12\n\ntype_names\x18\x01 \x03(\t\x12\x14\n\x0ctarget_names\x18\x02 \x03(\t\x12*\n\tenvelopes\x18\x03 \x03(\x0b\x32\x17.remote.MessageEnvelope\"{\n\x0fMessageEnvelope\x12\x0f\n\x07type_id\x18\x01 \x01(\x05\x12\x14\n\x0cmessage_data\x18\x02 \x01(\x0c\x12\x0e\n\x06target\x18\x03 \x01(\x05\x12\x1a\n\x06sender\x18\x04 \x01(\x0b\x32\n.actor.PID\x12\x15\n\rserializer_id\x18\x05 \x01(\x05\"-\n\x0f\x41\x63torPidRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04kind\x18\x02 \x01(\t\"+\n\x10\x41\x63torPidResponse\x12\x17\n\x03pid\x18\x01 \x01(\x0b\x32\n.actor.PID\"\x06\n\x04Unit\"\x10\n\x0e\x43onnectRequest\"0\n\x0f\x43onnectResponse\x12\x1d\n\x15\x64\x65\x66\x61ult_serializer_id\x18\x01 \x01(\x05\x32}\n\x08Remoting\x12<\n\x07\x43onnect\x12\x16.remote.ConnectRequest\x1a\x17.remote.ConnectResponse\"\x00\x12\x33\n\x07Receive\x12\x14.remote.MessageBatch\x1a\x0c.remote.Unit\"\x00(\x01\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x0cprotos.proto\x12\x06remote\x1a\x10protos_pb2.proto\"d\n\x0cMessageBatch\x12\x12\n\ntype_names\x18\x01 \x03(\t\x12\x14\n\x0ctarget_names\x18\x02 \x03(\t\x12*\n\tenvelopes\x18\x03 \x03(\x0b\x32\x17.remote.MessageEnvelope\"\xaa\x01\n\x0fMessageEnvelope\x12\x0f\n\x07type_id\x18\x01 \x01(\x05\x12\x14\n\x0cmessage_data\x18\x02 \x01(\x0c\x12\x0e\n\x06target\x18\x03 \x01(\x05\x12\x1a\n\x06sender\x18\x04 \x01(\x0b\x32\n.actor.PID\x12\x15\n\rserializer_id\x18\x05 \x01(\x05\x12-\n\x0emessage_header\x18\x06 \x01(\x0b\x32\x15.remote.MessageHeader\"~\n\rMessageHeader\x12:\n\x0bheader_data\x18\x01 \x03(\x0b\x32%.remote.MessageHeader.HeaderDataEntry\x1a\x31\n\x0fHeaderDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"-\n\x0f\x41\x63torPidRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04kind\x18\x02 \x01(\t\"@\n\x10\x41\x63torPidResponse\x12\x17\n\x03pid\x18\x01 \x01(\x0b\x32\n.actor.PID\x12\x13\n\x0bstatus_code\x18\x02 \x01(\x05\"\x06\n\x04Unit\"\x10\n\x0e\x43onnectRequest\"0\n\x0f\x43onnectResponse\x12\x1d\n\x15\x64\x65\x66\x61ult_serializer_id\x18\x01 \x01(\x05\x32}\n\x08Remoting\x12<\n\x07\x43onnect\x12\x16.remote.ConnectRequest\x1a\x17.remote.ConnectResponse\"\x00\x12\x33\n\x07Receive\x12\x14.remote.MessageBatch\x1a\x0c.remote.Unit\"\x00(\x01\x30\x01\x62\x06proto3')
   ,
   dependencies=[protos__pb2__pb2.DESCRIPTOR,])
 
@@ -40,21 +40,21 @@ _MESSAGEBATCH = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='target_names', full_name='remote.MessageBatch.target_names', index=1,
       number=2, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='envelopes', full_name='remote.MessageBatch.envelopes', index=2,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -85,35 +85,42 @@ _MESSAGEENVELOPE = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='message_data', full_name='remote.MessageEnvelope.message_data', index=1,
       number=2, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='target', full_name='remote.MessageEnvelope.target', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='sender', full_name='remote.MessageEnvelope.sender', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='serializer_id', full_name='remote.MessageEnvelope.serializer_id', index=4,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message_header', full_name='remote.MessageEnvelope.message_header', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -126,8 +133,76 @@ _MESSAGEENVELOPE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=144,
-  serialized_end=267,
+  serialized_start=145,
+  serialized_end=315,
+)
+
+
+_MESSAGEHEADER_HEADERDATAENTRY = _descriptor.Descriptor(
+  name='HeaderDataEntry',
+  full_name='remote.MessageHeader.HeaderDataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='remote.MessageHeader.HeaderDataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='remote.MessageHeader.HeaderDataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=394,
+  serialized_end=443,
+)
+
+_MESSAGEHEADER = _descriptor.Descriptor(
+  name='MessageHeader',
+  full_name='remote.MessageHeader',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='header_data', full_name='remote.MessageHeader.header_data', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_MESSAGEHEADER_HEADERDATAENTRY, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=317,
+  serialized_end=443,
 )
 
 
@@ -144,14 +219,14 @@ _ACTORPIDREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='kind', full_name='remote.ActorPidRequest.kind', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -164,8 +239,8 @@ _ACTORPIDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=269,
-  serialized_end=314,
+  serialized_start=445,
+  serialized_end=490,
 )
 
 
@@ -182,7 +257,14 @@ _ACTORPIDRESPONSE = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='status_code', full_name='remote.ActorPidResponse.status_code', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -195,8 +277,8 @@ _ACTORPIDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=316,
-  serialized_end=359,
+  serialized_start=492,
+  serialized_end=556,
 )
 
 
@@ -219,8 +301,8 @@ _UNIT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=361,
-  serialized_end=367,
+  serialized_start=558,
+  serialized_end=564,
 )
 
 
@@ -243,8 +325,8 @@ _CONNECTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=369,
-  serialized_end=385,
+  serialized_start=566,
+  serialized_end=582,
 )
 
 
@@ -261,7 +343,7 @@ _CONNECTRESPONSE = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -274,15 +356,19 @@ _CONNECTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=387,
-  serialized_end=435,
+  serialized_start=584,
+  serialized_end=632,
 )
 
 _MESSAGEBATCH.fields_by_name['envelopes'].message_type = _MESSAGEENVELOPE
 _MESSAGEENVELOPE.fields_by_name['sender'].message_type = protos__pb2__pb2._PID
+_MESSAGEENVELOPE.fields_by_name['message_header'].message_type = _MESSAGEHEADER
+_MESSAGEHEADER_HEADERDATAENTRY.containing_type = _MESSAGEHEADER
+_MESSAGEHEADER.fields_by_name['header_data'].message_type = _MESSAGEHEADER_HEADERDATAENTRY
 _ACTORPIDRESPONSE.fields_by_name['pid'].message_type = protos__pb2__pb2._PID
 DESCRIPTOR.message_types_by_name['MessageBatch'] = _MESSAGEBATCH
 DESCRIPTOR.message_types_by_name['MessageEnvelope'] = _MESSAGEENVELOPE
+DESCRIPTOR.message_types_by_name['MessageHeader'] = _MESSAGEHEADER
 DESCRIPTOR.message_types_by_name['ActorPidRequest'] = _ACTORPIDREQUEST
 DESCRIPTOR.message_types_by_name['ActorPidResponse'] = _ACTORPIDRESPONSE
 DESCRIPTOR.message_types_by_name['Unit'] = _UNIT
@@ -303,6 +389,21 @@ MessageEnvelope = _reflection.GeneratedProtocolMessageType('MessageEnvelope', (_
   # @@protoc_insertion_point(class_scope:remote.MessageEnvelope)
   ))
 _sym_db.RegisterMessage(MessageEnvelope)
+
+MessageHeader = _reflection.GeneratedProtocolMessageType('MessageHeader', (_message.Message,), dict(
+
+  HeaderDataEntry = _reflection.GeneratedProtocolMessageType('HeaderDataEntry', (_message.Message,), dict(
+    DESCRIPTOR = _MESSAGEHEADER_HEADERDATAENTRY,
+    __module__ = 'protos_pb2'
+    # @@protoc_insertion_point(class_scope:remote.MessageHeader.HeaderDataEntry)
+    ))
+  ,
+  DESCRIPTOR = _MESSAGEHEADER,
+  __module__ = 'protos_pb2'
+  # @@protoc_insertion_point(class_scope:remote.MessageHeader)
+  ))
+_sym_db.RegisterMessage(MessageHeader)
+_sym_db.RegisterMessage(MessageHeader.HeaderDataEntry)
 
 ActorPidRequest = _reflection.GeneratedProtocolMessageType('ActorPidRequest', (_message.Message,), dict(
   DESCRIPTOR = _ACTORPIDREQUEST,
@@ -340,6 +441,8 @@ ConnectResponse = _reflection.GeneratedProtocolMessageType('ConnectResponse', (_
 _sym_db.RegisterMessage(ConnectResponse)
 
 
+_MESSAGEHEADER_HEADERDATAENTRY.has_options = True
+_MESSAGEHEADER_HEADERDATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 
 _REMOTING = _descriptor.ServiceDescriptor(
   name='Remoting',
@@ -347,8 +450,8 @@ _REMOTING = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=437,
-  serialized_end=562,
+  serialized_start=634,
+  serialized_end=759,
   methods=[
   _descriptor.MethodDescriptor(
     name='Connect',

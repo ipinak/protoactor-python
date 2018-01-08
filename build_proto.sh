@@ -5,7 +5,7 @@ case $input in
     remote)
         cd protoactor/remote
         echo "Compiling remote messages"
-        # python -m grpc_tools.protoc -I. -I.. --python_out=. --grpc_python_out=. protoactor/remote/protos.proto
+        python -m grpc_tools.protoc -I. -I.. --python_out=. --grpc_python_out=. protoactor/remote/protos.proto
         ;;
     actor)
         cd protoactor
