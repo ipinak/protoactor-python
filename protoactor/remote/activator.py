@@ -22,12 +22,12 @@ class Activator(Actor):
                 pid = None  # Actor.SpawnNamed(props, name)
                 response = ActorPidResponse(pid=pid)
                 context.Respond(response)
-            except ProcessNameExistException ex:
+            except ProcessNameExistException as pne:
                 response = ActorPidResponse(
-                    pid=ex.pid,
+                    pid=pne.pid,
                     status_code=ResponseStatusCode.ProcessNameAlreadyExist)
                 context.Respond(response)
-            except ActivatorException ae:
+            except ActivatorException as ae:
                 response = ActorPidResponse(
                     status_code=ae.code)
                 context.Respond(response)
